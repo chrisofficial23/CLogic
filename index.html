@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C-Logic | Online Coding Platform</title>
+
+<style>
+:root {
+  --bg: #080b12;
+  --panel: #101622;
+  --border: #252e40;
+  --text: #edf2ff;
+  --muted: #8995aa;
+  --blue: #6685ff;
+  --cyan: #5ce1e6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at top, #17264a 0%, transparent 45%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+button, select {
+  font: inherit;
+}
+
+.topbar {
+  min-height: 76px;
+  padding: 16px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+  background: #090d16dd;
+}
+
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.logo {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  color: #07111d;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.brand p {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+}
+
+.status {
+  font-size: 12px;
+  color: var(--cyan);
+  border: 1px solid #24545c;
+  background: #10262b;
+  padding: 8px 12px;
+  border-radius: 20px;
+}
+
+main {
+  max-width: 1450px;
+  margin: auto;
+  padding: 35px 5%;
+}
+
+.hero {
+  margin-bottom: 25px;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font-size: 11px;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.hero h2 {
+  font-size: clamp(29px, 5vw, 48px);
+  letter-spacing: -1.5px;
+  margin: 12px 0;
+}
+
+.hero h2 span {
+  color: var(--blue);
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 650px;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 15px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 15px 15px 0 0;
+}
+
+.field-label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+select {
+  color: var(--text);
+  background: #0b111d;
+  border: 1px solid #303c52;
+  border-radius: 9px;
+  padding: 11px 13px;
+  outline: none;
+}
+
+/* FIX: consistent language selector sizing */
+#language {
+  width: 155px;
+  min-width: 155px;
+  max-width: 100%;
+  flex: 0 0 155px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#language:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px #6685ff22;
+}
+
+#language option {
+  background: #101622;
+  color: var(--text);
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid #303c52;
+  border-radius: 9px;
+  padding: 11px 15px;
+  color: var(--text);
+  background: #182235;
+  transition: 0.2s;
+}
+
+button:hover {
+  filter: brightness(1.2);
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+  transform: none;
+}
+
+.run {
+  background: linear-gradient(135deg, #617dff, #4163e8);
+  color: white;
+  border: 0;
+  font-weight: 700;
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.workspace {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-top: 0;
+  border-radius: 0 0 15px 15px;
+  background: #0c111b;
+}
+
+.editor-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 17px;
+  background: #111927;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.editor-heading span:last-child {
+  color: var(--muted);
+}
+
+iframe {
+  display: block;
+  width: 100%;
+  height: 650px;
+  border: 0;
+  background: #0c111b;
+}
+
+.notice {
+  margin-top: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 17px;
+  background: #101622;
+  display: flex;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.notice-icon {
+  font-size: 20px;
+}
+
+.notice strong {
+  font-size: 13px;
+}
+
+.notice p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.feature {
+  background: #101622;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 19px;
+}
+
+.feature .icon {
+  font-size: 22px;
+}
+
+.feature h3 {
+  font-size: 14px;
+  margin: 12px 0 7px;
+}
+
+.feature p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+footer {
+  padding: 25px 5%;
+  text-align: center;
+  color: #647087;
+  font-size: 11px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+@media (max-width: 650px) {
+  .topbar {
+    padding: 13px 4%;
+  }
+
+  .brand h1 {
+    font-size: 15px;
+  }
+
+  .status {
+    font-size: 10px;
+    padding: 7px 9px;
+  }
+
+  main {
+    padding: 27px 4%;
+  }
+
+  .toolbar {
+    gap: 9px;
+  }
+
+  .toolbar-spacer {
+    display: none;
+  }
+
+  .toolbar button {
+    flex: 1;
+  }
+
+  .field-label {
+    width: 100%;
+  }
+
+  #language {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+
+  iframe {
+    height: 650px;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">&lt;/&gt;</div>
+    <div>
+      <h1>C-Logic</h1>
+      <p>CODE · COMPILE · RUN</p>
+    </div>
+  </div>
+  <div class="status">● ONLINE EDITOR</div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">YOUR CODING WORKSPACE</div>
+    <h2>Write code. <span>Make it work.</span></h2>
+    <p>
+      Write, compile, and run your programs in one place.
+      Practice programming, test your logic, and check your output
+      without installing a compiler on your computer.
+    </p>
+  </section>
+
+  <section class="toolbar">
+    <span class="field-label">PROGRAMMING LANGUAGE</span>
+
+    <select id="language" aria-label="Programming language">
+      <option value="cpp">C++</option>
+      <option value="c">C</option>
+      <option value="java">Java</option>
+      <option value="python">Python</option>
+      <option value="javascript">JavaScript</option>
+      <option value="csharp">C#</option>
+    </select>
+
+    <div class="toolbar-spacer"></div>
+
+    <button id="reload">↻ Reload Editor</button>
+    <button class="run" id="run">▶ Open / Run</button>
+  </section>
+
+  <section class="workspace">
+    <div class="editor-heading">
+      <span id="filename">main.cpp</span>
+      <span>Powered by Chris-Logic</span>
+    </div>
+
+    <iframe
+      id="compiler"
+      title="C-Logic Online Code Editor"
+      src="https://onecompiler.com/embed/cpp?theme=dark&listenToEvents=true"
+      allow="clipboard-read; clipboard-write"
+      loading="eager">
+    </iframe>
+  </section>
+
+  <section class="notice">
+    <div class="notice-icon">💡</div>
+    <div>
+      <strong>How to run your program</strong>
+      <p>
+        Write your code inside the editor above, then use its Run button.
+        For C++ programs that ask for input using cin or getline(),
+        enter your input in the compiler's STDIN section before running.
+        The compiler will display your program's actual output or errors.
+      </p>
+    </div>
+  </section>
+
+  <section class="features">
+    <article class="feature">
+      <div class="icon">⚡</div>
+      <h3>Compile and Run</h3>
+      <p>Execute code using an online compiler and inspect your program's output.</p>
+    </article>
+
+    <article class="feature">
+      <div class="icon">⌨️</div>
+      <h3>Multiple Languages</h3>
+      <p>Switch between C++, C, Java, Python, JavaScript, and C#.</p>
+    </article>
+
+    <article class="feature">
+      <div class="icon">🧪</div>
+      <h3>Test Your Input</h3>
+      <p>Test programs that read user input and inspect their output and compiler errors.</p>
+    </article>
+  </section>
+</main>
+
+<footer>
+  C-Logic · Powered by Chris-Logic
+</footer>
+
+<script>
+const languageSelect = document.getElementById("language");
+const compiler = document.getElementById("compiler");
+const filename = document.getElementById("filename");
+const reloadButton = document.getElementById("reload");
+const runButton = document.getElementById("run");
+
+const extensions = {
+  cpp: "main.cpp",
+  c: "main.c",
+  java: "Main.java",
+  python: "main.py",
+  javascript: "main.js",
+  csharp: "Main.cs"
+};
+
+const compilerOrigin = "https://onecompiler.com";
+
+function loadCompiler() {
+  const language = languageSelect.value;
+
+  filename.textContent = extensions[language];
+
+  compiler.src =
+    compilerOrigin +
+    "/embed/" +
+    encodeURIComponent(language) +
+    "?theme=dark&listenToEvents=true";
+}
+
+languageSelect.addEventListener("change", loadCompiler);
+
+reloadButton.addEventListener("click", loadCompiler);
+
+runButton.addEventListener("click", () => {
+  try {
+    compiler.contentWindow.postMessage(
+      { eventType: "triggerRun" },
+      compilerOrigin
+    );
+  } catch (error) {
+    console.error("Unable to communicate with the editor:", error);
+  }
+});
+</script>
+
+</body>
+</html>
